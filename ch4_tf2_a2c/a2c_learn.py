@@ -178,7 +178,7 @@ class A2Cagent(object):
             # 에피소드 초기화
             time, episode_reward, done = 0, 0, False
             # 환경 초기화 및 초기 상태 관측
-            state = self.env.reset()
+            state = self.env.reset()[0]
 
             while not done:
 
@@ -190,7 +190,7 @@ class A2Cagent(object):
                 # 행동 범위 클리핑
                 action = np.clip(action, -self.action_bound, self.action_bound)
                 # 다음 상태, 보상 관측
-                next_state, reward, done, _ = self.env.step(action)
+                next_state, reward, done, trunc, info = self.env.step(action)
                 # shape 변환
                 state = np.reshape(state, [1, self.state_dim])
                 action = np.reshape(action, [1, self.action_dim])
